@@ -2,7 +2,7 @@ FROM anapsix/alpine-java
 
 MAINTAINER Exakat, Damien Seguy, dseguy@exakat.io
 
-ENV GREMLIN_VERSION 3.2.7
+ENV GREMLIN_VERSION 3.3.3
 ENV GREMLIN_HOME /usr/src/exakat/tinkergraph
 ENV EXAKAT_VERSION 1.2.0a
 ENV EXAKAT_URI http://dist.exakat.io/index.php?file=exakat-$EXAKAT_VERSION.phar
@@ -33,7 +33,7 @@ RUN \
     && rm -rf apache-tinkerpop-gremlin-server-$GREMLIN_VERSION-bin.zip  \
     && cd tinkergraph \
     && mkdir db \
-    && ./bin/gremlin-server.sh -i org.apache.tinkerpop neo4j-gremlin 3.2.7 \
+    && ./bin/gremlin-server.sh -i org.apache.tinkerpop neo4j-gremlin $GREMLIN_VERSION \
     && rm -rf javadocs \
     && rm -rf docs \
     && cd .. \

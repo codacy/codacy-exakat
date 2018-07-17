@@ -2,7 +2,7 @@ FROM develar/java
 
 MAINTAINER Exakat, Damien Seguy, dseguy@exakat.io
 
-ENV GREMLIN_VERSION 3.2.7
+ENV GREMLIN_VERSION 3.3.3
 ENV GREMLIN_HOME /usr/src/exakat/tinkergraph
 
 COPY tinkergraph/ /usr/src/exakat/tinkergraph
