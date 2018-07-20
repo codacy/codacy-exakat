@@ -47,4 +47,5 @@ crashlytics-build.properties
 fabric.properties
 
 neo4j-gremlin-plugin/
+tinkergraph/
 

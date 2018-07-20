@@ -15,11 +15,12 @@ RUN \
     && curl --fail --silent --show-error --location --output apache-tinkerpop-gremlin-server-$GREMLIN_VERSION-bin.zip http://dist.exakat.io/apache-tinkerpop-gremlin-server-$GREMLIN_VERSION-bin.zip \
     && unzip apache-tinkerpop-gremlin-server-$GREMLIN_VERSION-bin.zip \
     && mv apache-tinkerpop-gremlin-server-$GREMLIN_VERSION tinkergraph \
-    && rm -rf apache-tinkerpop-gremlin-server-$GREMLIN_VERSION-bin.zip  \
+    && rm -rf apache-tinkerpop-gremlin-server-$GREMLIN_VERSION-bin.zip \
     && cd tinkergraph \
     && mkdir db \
-    && /bin/bash ./bin/gremlin-server.sh -i org.apache.tinkerpop neo4j-gremlin 3.3.3 \
+    && /bin/bash ./bin/gremlin-server.sh -i org.apache.tinkerpop neo4j-gremlin $GREMLIN_VERSION \
     && rm -rf javadocs \
     && rm -rf docs \
     && cd ..
-    
+
+CMD ["cp", "-avr", "/tinkergraph", "/mnt/"]
