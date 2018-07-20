@@ -12,7 +12,7 @@ RUN \
     && apk add --no-cache bash curl \
     \
     && echo "====> Gremlin-Server" \
-    && curl --fail --silent --show-error --location --output apache-tinkerpop-gremlin-server-$GREMLIN_VERSION-bin.zip http://dist.exakat.io/apache-tinkerpop-gremlin-server-$GREMLIN_VERSION-bin.zip \
+    && curl --fail --silent --show-error --location --output apache-tinkerpop-gremlin-server-$GREMLIN_VERSION-bin.zip http://apache.org/dist/tinkerpop/$GREMLIN_VERSION/apache-tinkerpop-gremlin-server-$GREMLIN_VERSION-bin.zip \
     && unzip apache-tinkerpop-gremlin-server-$GREMLIN_VERSION-bin.zip \
     && mv apache-tinkerpop-gremlin-server-$GREMLIN_VERSION tinkergraph \
     && rm -rf apache-tinkerpop-gremlin-server-$GREMLIN_VERSION-bin.zip \
