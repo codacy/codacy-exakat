@@ -12,14 +12,8 @@ machine:
 
 dependencies:
   override:
-    - (cd $HOME/codacy-plugins-test && sbt compile)
-    - |
-      (
-        cd $HOME/$CIRCLE_PROJECT_REPONAME && \
-        docker build -f gremlin.dockerfile -t exakat/gremlin . && \
-        docker run --rm -it -v $(pwd):/mnt exakat/gremlin:latest && \
-        docker build -t "$CIRCLE_PROJECT_REPONAME:latest" . \
-      )
+    - ( cd $HOME/codacy-plugins-test && sbt compile )
+    - ( cd $HOME/$CIRCLE_PROJECT_REPONAME && ./build.sh )
   cache_directories:
     - "~/.ivy2"
     - "~/.m2"
@@ -35,14 +29,14 @@ test:
   pre:
     - (cd $HOME/codacy-plugins-test; git fetch --all; git reset --hard origin/master)
   override:
-    - (cd $HOME/codacy-plugins-test && sbt -Dcodacy.tests.ignore.descriptions=true "run-main codacy.plugins.DockerTest json $CIRCLE_PROJECT_REPONAME:latest")
-    - (cd $HOME/codacy-plugins-test && sbt "run-main codacy.plugins.DockerTest pattern $CIRCLE_PROJECT_REPONAME:latest")
+    - (cd $HOME/codacy-plugins-test && sbt -Dcodacy.tests.ignore.descriptions=true "run-main codacy.plugins.DockerTest json codacy/$CIRCLE_PROJECT_REPONAME:latest")
+    - (cd $HOME/codacy-plugins-test && sbt "run-main codacy.plugins.DockerTest pattern codacy/$CIRCLE_PROJECT_REPONAME:latest")
 
 deployment:
   hub:
     branch: codacy
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker tag $CIRCLE_PROJECT_REPONAME codacy/$CIRCLE_PROJECT_REPONAME
-      - docker tag $CIRCLE_PROJECT_REPONAME codacy/$CIRCLE_PROJECT_REPONAME:1.0.$CIRCLE_BUILD_NUM
-      - docker push codacy/$CIRCLE_PROJECT_REPONAME
+      - docker tag codacy/$CIRCLE_PROJECT_REPONAME:latest codacy/$CIRCLE_PROJECT_REPONAME:1.0.$CIRCLE_BUILD_NUM
+      - docker push codacy/$CIRCLE_PROJECT_REPONAME:1.0.$CIRCLE_BUILD_NUM
+      - docker push codacy/$CIRCLE_PROJECT_REPONAME:latest
