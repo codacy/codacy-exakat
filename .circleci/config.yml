@@ -2,17 +2,17 @@ version: 2
 jobs:
   build:
     machine: true
-    working_directory: ~/
+    working_directory: ~/workdir
     steps:
-      - checkout
       - run:
           name: Clone test project
+          working_directory: ~/
           command: |
             (git -C ~/codacy-plugins-test fetch --all &&
               git -C ~/codacy-plugins-test reset --hard origin/master) ||
                 git clone git://github.com/codacy/codacy-plugins-test.git ~/codacy-plugins-test
       - restore_cache:
-                key: dependencies-{{ checksum "codacy-plugins-test/build.sbt" }}
+          key: dependencies-{{ checksum "~/codacy-plugins-test/build.sbt" }}
       - run:
           name: Compile test project
           working_directory: ~/codacy-plugins-test
@@ -26,6 +26,7 @@ jobs:
                   - "~/codacy-plugins-test/target"
                   - "~/codacy-plugins-test/project/target"
                   - "~/codacy-plugins-test/project/project"
+      - checkout
       - run:
           name: Publish tool docker locally
           working_directory: ~/workdir
