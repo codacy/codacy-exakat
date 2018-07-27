@@ -4,6 +4,7 @@ jobs:
     machine: true
     working_directory: ~/workdir
     steps:
+      - checkout
       - run:
           name: Clone test project
           working_directory: ~/
@@ -11,22 +12,10 @@ jobs:
             (git -C ~/codacy-plugins-test fetch --all &&
               git -C ~/codacy-plugins-test reset --hard origin/master) ||
                 git clone git://github.com/codacy/codacy-plugins-test.git ~/codacy-plugins-test
-      - restore_cache:
-          key: dependencies-{{ checksum "~/codacy-plugins-test/build.sbt" }}
       - run:
           name: Compile test project
           working_directory: ~/codacy-plugins-test
           command: sbt compile
-      - save_cache:
-                key: dependencies-{{ checksum "codacy-plugins-test/build.sbt" }}
-                paths:
-                  - "~/.ivy2"
-                  - "~/.m2"
-                  - "~/.sbt"
-                  - "~/codacy-plugins-test/target"
-                  - "~/codacy-plugins-test/project/target"
-                  - "~/codacy-plugins-test/project/project"
-      - checkout
       - run:
           name: Publish tool docker locally
           working_directory: ~/workdir
