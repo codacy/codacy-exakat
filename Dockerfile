@@ -1,4 +1,6 @@
-FROM exakat/gremlin
+ARG gremlinVersion
+
+FROM codacy/alpine-gremlin:${gremlinVersion}
 
 MAINTAINER Exakat, Damien Seguy, dseguy@exakat.io
 
