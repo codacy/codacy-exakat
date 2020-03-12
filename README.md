@@ -1,6 +1,6 @@
 # Codacy-Exakat Docker Container
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/297acbe7174e492c921cc7ae20194e93)](https://www.codacy.com/project/Codacy/codacy-exakat/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=codacy/codacy-exakat&amp;utm_campaign=Badge_Grade_Dashboard) 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/297acbe7174e492c921cc7ae20194e93)](https://www.codacy.com/gh/codacy/codacy-exakat?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=codacy/codacy-exakat&amp;utm_campaign=Badge_Grade)
 [![Build Status](https://circleci.com/gh/codacy/codacy-exakat.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/codacy/codacy-exakat)
 [![Docker Version](https://images.microbadger.com/badges/version/codacy/codacy-exakat.svg)](https://microbadger.com/images/codacy/codacy-exakat "Get your own version badge on microbadger.com")
 
