@@ -6,15 +6,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Clone test project
-          working_directory: ~/
-          command: |
-            (git -C ~/codacy-plugins-test fetch --all &&
-              git -C ~/codacy-plugins-test reset --hard origin/master) ||
-                git clone git://github.com/codacy/codacy-plugins-test.git ~/codacy-plugins-test
-      - run:
           name: Compile test project
-          working_directory: ~/codacy-plugins-test
+          working_directory: ~/workdir/codacy-plugins-test
           command: sbt compile
       - run:
           name: Publish tool docker locally
@@ -22,11 +15,11 @@ jobs:
           command: ./build.sh
       - run:
           name: Test json
-          working_directory: ~/codacy-plugins-test
+          working_directory: ~/workdir/codacy-plugins-test
           command: sbt -Dcodacy.tests.ignore.descriptions=true "run-main codacy.plugins.DockerTest json codacy/$CIRCLE_PROJECT_REPONAME:latest"
       - run:
           name: Test patterns
-          working_directory: ~/codacy-plugins-test
+          working_directory: ~/workdir/codacy-plugins-test
           command: sbt -Dcodacy.tests.noremove=true -Dcodacy.tests.threads=8 "run-main codacy.plugins.DockerTest pattern codacy/$CIRCLE_PROJECT_REPONAME:latest"
       - deploy:
           name: Push application Docker image
