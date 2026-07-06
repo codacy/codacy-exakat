@@ -1,0 +1,90 @@
+description: "Runs codacy-plugins-test on a tool"
+
+machine: true
+
+parameters:
+  run_json_tests:
+    type: boolean
+    default: true
+    description: "Run 'json' tests in codacy-plugins-test"
+  run_pattern_tests:
+    type: boolean
+    default: true
+    description: "Run 'pattern' tests in codacy-plugins-test"
+  run_metrics_tests:
+    type: boolean
+    default: false
+    description: "Run 'metrics' tests in codacy-plugins-test"
+  run_duplication_tests:
+    type: boolean
+    default: false
+    description: "Run 'duplication' tests in codacy-plugins-test"
+  run_multiple_tests:
+    type: boolean
+    default: false
+    description: "Run 'multiple' tests in codacy-plugins-test"
+  docker_image_name:
+    type: string
+    default: $CIRCLE_PROJECT_REPONAME
+    description: "Tool docker image name"
+  docker_image_tag:
+    type: string
+    default: latest
+    description: "Tool docker image tag"
+  docker_tar_path:
+    type: string
+    default: ~/workdir/docker-image.tar
+    description: Path to the docker tar
+
+steps:
+  - attach_workspace:
+      at: ~/workdir
+  - restore_cache:
+      key: codacy-plugins-test-cache-$CODACY_PLUGINS_TEST_VERSION # CODACY_PLUGINS_TEST_VERSION injected in .circle/config.yml
+  - run:
+      command: |
+        mkdir -p codacy-plugins-test
+        cd codacy-plugins-test
+        LINK="https://artifacts.codacy.com/bin/codacy-plugins-test/$CODACY_PLUGINS_TEST_VERSION/codacy-plugins-test-linux"
+        wget -nc $LINK -O $FILENAME # FILENAME injected in .circle/config.yml
+        chmod +x $FILENAME
+        docker load --input << parameters.docker_tar_path >>
+  - when:
+      condition: << parameters.run_json_tests >>
+      steps:
+        - run:
+            name: Run Json Tests
+            command: |
+              codacy-plugins-test/$FILENAME json << parameters.docker_image_name >>:<< parameters.docker_image_tag >>
+  - when:
+      condition: << parameters.run_pattern_tests >>
+      steps:
+        - run:
+            name: Run Pattern Tests
+            command: |
+              codacy-plugins-test/$FILENAME pattern << parameters.docker_image_name >>:<< parameters.docker_image_tag >>
+  - when:
+      condition: << parameters.run_metrics_tests >>
+      steps:
+        - run:
+            name: Run Metrics Tests
+            command: |
+              codacy-plugins-test/$FILENAME metrics << parameters.docker_image_name >>:<< parameters.docker_image_tag >>
+  - when:
+      condition: << parameters.run_duplication_tests >>
+      steps:
+        - run:
+            name: Run Duplication Tests
+            command: |
+              codacy-plugins-test/$FILENAME duplication << parameters.docker_image_name >>:<< parameters.docker_image_tag >>
+  - when:
+      condition: << parameters.run_multiple_tests >>
+      steps:
+        - run:
+            name: Run Multiple Tests
+            command: |
+              codacy-plugins-test/$FILENAME multiple << parameters.docker_image_name >>:<< parameters.docker_image_tag >>
+  - save_cache:
+      key: codacy-plugins-test-cache-$CODACY_PLUGINS_TEST_VERSION
+      paths:
+        - ~/codacy-plugins-test

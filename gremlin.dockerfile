@@ -2,7 +2,7 @@ FROM anapsix/alpine-java
 
 MAINTAINER Exakat, Damien Seguy, dseguy@exakat.io
 
-ENV GREMLIN_VERSION 3.3.3
+ENV GREMLIN_VERSION 3.8.1
 
 COPY grapeConfig.xml /root/.groovy/grapeConfig.xml
 
