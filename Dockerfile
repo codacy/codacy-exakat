@@ -17,8 +17,8 @@ RUN \
     echo "===> Setup PHP" \
     && apk add --no-cache bash curl \
     && echo "===> PHP 7.2" \
-    && apk add --update 'php7>7.2' 'php7-curl>7.2' 'php7-json>7.2' 'php7-phar>7.2' \
-       'php7-sqlite3>7.2' 'php7-mbstring>7.2' 'php7-tokenizer>7.2' \
+    && apk add --update 'php7>=7.1.33' 'php7-curl>=7.1.33' 'php7-json>=7.1.33' 'php7-phar>=7.1.33' \
+       'php7-sqlite3>=7.1.33' 'php7-mbstring>=7.1.33' 'php7-tokenizer>=7.1.33' \
     \
     && echo "===> php.ini" \
     && echo "memory_limit=-1" >> /etc/php7/php.ini \
