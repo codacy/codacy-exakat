@@ -28,7 +28,7 @@ RUN \
     && mv /usr/src/exakat/gsneo4j.3.3.yaml /usr/src/exakat/tinkergraph/conf/ \
     \
     && echo "===> Setup Exakat" \
-    && apk add --no-cache curl curl-dev grep findutils ncurses libbsd=0.8.6-r2 \
+    && apk add --no-cache curl curl-dev grep findutils ncurses libbsd=0.8.6-r1 \
     && echo "====> Exakat $EXAKAT_VERSION" \
     && cd /usr/src/exakat \
     && curl --fail --silent --show-error --location --output exakat.phar $EXAKAT_URI \
