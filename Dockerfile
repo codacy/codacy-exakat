@@ -4,7 +4,7 @@ FROM codacy/alpine-gremlin:${gremlinVersion}
 
 MAINTAINER Exakat, Damien Seguy, dseguy@exakat.io
 
-ENV EXAKAT_VERSION 1.3.6
+ENV EXAKAT_VERSION 2.1.1
 ENV EXAKAT_URI http://dist.exakat.io/index.php?file=exakat-$EXAKAT_VERSION.phar
 
 COPY exakat.sh /usr/src/exakat/
